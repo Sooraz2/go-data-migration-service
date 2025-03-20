@@ -1,0 +1,32 @@
+source:
+  connection: mysql
+  host: ${SOURCE_HOST}
+  port: ${SOURCE_PORT}
+  database: ${SOURCE_DATABASE}
+  username: ${SOURCE_USERNAME}
+  password: ${SOURCE_PASSWORD}
+
+destination:
+  connection: mysql
+  host: ${DEST_HOST}
+  port: ${DEST_PORT}
+  database: ${DEST_DATABASE}
+  username: ${DEST_USERNAME}
+  password: ${DEST_PASSWORD}
+
+migration:
+  main_table:
+    name: "userinfo"
+    filter:
+      column: "home_address"
+      value: "1320"
+    columns: ["userid", "cfname", "clname", "home_address", "cemail"]
+  
+  related_tables:
+    - name: "policies"
+      foreign_key: "policy_userid"
+      columns: ["policy_id", "policy_userid", "p_agent_num", "status"]
+    
+    - name: "user_login"
+      foreign_key: "userid"
+      columns: ["userid", "username"]
